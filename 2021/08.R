@@ -42,7 +42,7 @@ patterns$output |>
 
 # Part 2 ------------------------------------------------------------------
 
-results <- patterns |>
+patterns |>
   mutate(
     input = map(input, \(x) {
       left_join(x, nchar_unique, by = "segments") |>
@@ -80,7 +80,5 @@ results <- patterns |>
     }),
     output = map2(output, input, left_join, by = "value"),
     number = map_dbl(output, \(x) as.numeric(paste0(x$digit, collapse = "")))
-  )
-
-results |>
-  summarise(sum(number))
+  ) |>
+  summarise(result = sum(number))
