@@ -16,9 +16,9 @@ dfs_recursive <- function(graph, root, avoid = root, small_visits = 1) {
       } else {
         paths <<- paths + dfs_recursive(graph, x, avoid, small_visits)
       }
-    } else if (small_visits == 2) {
-      # Don't add small caves to avoid list after the first visit
-      paths <<- paths + dfs_recursive(graph, x, avoid, small_visits = 1)
+    } else if (small_visits >= 2) {
+      # Don't add small caves to avoid list until the last allowed visit
+      paths <<- paths + dfs_recursive(graph, x, avoid, small_visits = small_visits - 1)
     }
   })
   paths
