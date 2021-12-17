@@ -3,7 +3,7 @@ library(purrr)
 
 # Utils -------------------------------------------------------------------
 
-prob_position <- function(vx, vy, x = 0, y = 0, max_y = 0) {
+fire_prob <- function(vx, vy, x = 0, y = 0, max_y = 0) {
   max_y <- max(y, max_y)
   # Miss:
   if (x > target$x2 || y < target$y1) {
@@ -14,7 +14,7 @@ prob_position <- function(vx, vy, x = 0, y = 0, max_y = 0) {
     return(tibble::lst(max_y, hit = 1))
   }
   # Recurse with new position and velocity
-  prob_position(vx - sign(vx), vy - 1, x + vx, y + vy, max_y)
+  fire_prob(vx - sign(vx), vy - 1, x + vx, y + vy, max_y)
 }
 
 # Data --------------------------------------------------------------------
@@ -30,13 +30,13 @@ target <- tibble(input = readLines(here::here("2021/Day17/data.txt"))) |>
 # Part 1 ------------------------------------------------------------------
 
 expand.grid(vx = 1:target$x2, vy = -target$y1:target$y1) |>
-  pmap_dfr(\(vx, vy) prob_position(vx, vy)) |>
+  pmap_dfr(\(vx, vy) fire_prob(vx, vy)) |>
   filter(hit == 1) |>
   slice_max(max_y)
 
 # Part 2 ------------------------------------------------------------------
 
 expand.grid(vx = 1:target$x2, vy = -target$y1:target$y1) |>
-  pmap_dfr(\(vx, vy) prob_position(vx, vy)) |>
+  pmap_dfr(\(vx, vy) fire_prob(vx, vy)) |>
   filter(hit == 1) |>
   nrow()
