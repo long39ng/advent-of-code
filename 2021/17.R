@@ -29,14 +29,14 @@ target <- tibble(input = readLines(here::here("2021/Day17/data.txt"))) |>
 
 # Part 1 ------------------------------------------------------------------
 
-expand.grid(vx = 1:(target$x2 + 1), vy = -target$y1:target$y1) |>
+expand.grid(vx = 1:target$x2, vy = -target$y1:target$y1) |>
   pmap_dfr(\(vx, vy) prob_position(vx, vy)) |>
   filter(hit == 1) |>
   slice_max(max_y)
 
 # Part 2 ------------------------------------------------------------------
 
-expand.grid(vx = 1:(target$x2 + 1), vy = -target$y1:target$y1) |>
+expand.grid(vx = 1:target$x2, vy = -target$y1:target$y1) |>
   pmap_dfr(\(vx, vy) prob_position(vx, vy)) |>
   filter(hit == 1) |>
   nrow()
