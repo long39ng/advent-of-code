@@ -19,7 +19,7 @@ fire_prob <- function(vx, vy, x = 0, y = 0, max_y = 0) {
 
 # Data --------------------------------------------------------------------
 
-target <- tibble(input = readLines(here::here("2021/Day17/data.txt"))) |>
+target <- tibble(input = readLines(here::here("2021/17-input"))) |>
   transmute(
     area = stringr::str_extract_all(input, "-?\\d+"),
     area = map(area, as.numeric),

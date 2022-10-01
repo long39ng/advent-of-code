@@ -39,7 +39,7 @@ flash_matrix <- function(m) {
 
 # Data --------------------------------------------------------------------
 
-input <- readLines(here::here("2021/Day11/data.txt")) |>
+input <- readLines(here::here("2021/11-input")) |>
   strsplit("", fixed = TRUE) |>
   map(as.numeric) |>
   do.call(what = rbind)

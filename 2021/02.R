@@ -4,7 +4,7 @@ library(dplyr)
 # Data --------------------------------------------------------------------
 
 input_df <- readr::read_delim(
-  here::here("2021/Day2/data.txt"),
+  here::here("2021/02-input"),
   delim = " ",
   col_types = "ci",
   col_names = c("command", "value")

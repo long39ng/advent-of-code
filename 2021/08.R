@@ -12,7 +12,7 @@ chardiffs <- function(x, y) {
 # Data --------------------------------------------------------------------
 
 patterns <- readr::read_delim(
-  here::here("2021/Day8/data.txt"),
+  here::here("2021/08-input"),
   delim = " | ",
   col_names = c("input", "output")
 ) |>

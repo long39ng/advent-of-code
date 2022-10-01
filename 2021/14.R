@@ -42,10 +42,10 @@ count_elements_after_steps <- function(polymer, steps) {
 
 # Data --------------------------------------------------------------------
 
-template <- readLines(here::here("2021/Day14/data.txt"), n = 1)
+template <- readLines(here::here("2021/14-input"), n = 1)
 
 rules <- readr::read_delim(
-  here::here("2021/Day14/data.txt"),
+  here::here("2021/14-input"),
   delim = " -> ",
   skip = 1,
   col_names = c("pair", "insert")

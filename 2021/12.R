@@ -26,7 +26,7 @@ dfs_recursive <- function(graph, root, avoid = root, small_visits = 1) {
 
 # Data --------------------------------------------------------------------
 
-input <- readr::read_delim(here::here("2021/Day12/data.txt"), delim = "-", col_names = FALSE)
+input <- readr::read_delim(here::here("2021/12-input"), delim = "-", col_names = FALSE)
 
 cave_net <- bind_rows(
   input |> rename(from = X1, to = X2),

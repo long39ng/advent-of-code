@@ -41,7 +41,7 @@ autocomplete_points <- function(str) {
 
 # Data --------------------------------------------------------------------
 
-input <- tibble(x = readLines(here::here("2021/Day10/data.txt")))
+input <- tibble(x = readLines(here::here("2021/10-input")))
 
 # Part 1 ------------------------------------------------------------------
 

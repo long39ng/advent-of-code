@@ -23,13 +23,13 @@ when_complete <- function(results_by_round) {
 
 # Data --------------------------------------------------------------------
 
-draws <- readLines(here::here("2021/Day4/data.txt"), n = 1) |>
+draws <- readLines(here::here("2021/04-input"), n = 1) |>
   strsplit(",", fixed = TRUE) |>
   unlist() |>
   as.integer() %>%
   set_names(seq_along(.))
 
-boards <- readr::read_fwf(here::here("2021/Day4/data.txt"), skip = 1) |>
+boards <- readr::read_fwf(here::here("2021/04-input"), skip = 1) |>
   tidyr::drop_na() %>%
   mutate(id = rep(seq_len(nrow(.) / 5), each = 5)) |>
   tidyr::nest(board = -id) |>

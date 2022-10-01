@@ -16,7 +16,7 @@ is_lowpoint <- function(m, row, col) {
 
 # Data --------------------------------------------------------------------
 
-heights <- readLines(here::here("2021/Day9/data.txt")) |>
+heights <- readLines(here::here("2021/09-input")) |>
   strsplit("", fixed = TRUE) |>
   map(as.integer) |>
   do.call(what = rbind)

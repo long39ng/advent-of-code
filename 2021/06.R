@@ -4,7 +4,7 @@ library(purrr)
 
 # Data --------------------------------------------------------------------
 
-school_init <- readLines(here::here("2021/Day6/data.txt")) |>
+school_init <- readLines(here::here("2021/06-input")) |>
   strsplit(",", fixed = TRUE) |>
   unlist() |>
   as.numeric() |>

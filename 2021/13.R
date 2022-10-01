@@ -25,7 +25,7 @@ fold_matrix <- function(m, axis = c("x", "y"), where) {
 
 # Data --------------------------------------------------------------------
 
-input <- readLines(here::here("2021/Day13/data.txt"))
+input <- readLines(here::here("2021/13-input"))
 
 dots <- tibble(coord = input[1:(which(input == "") - 1)]) |>
   tidyr::separate(coord, into = c("x", "y"), sep = ",", convert = TRUE) |>

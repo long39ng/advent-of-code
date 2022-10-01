@@ -12,7 +12,7 @@ prep_multipoint <- function(x, y) {
 
 # Data --------------------------------------------------------------------
 
-vents_df <- readr::read_delim(here::here("2021/Day5/data.txt"),
+vents_df <- readr::read_delim(here::here("2021/05-input"),
   delim = " -> ",
   col_names = c("A", "B"),
   col_types = "cc"

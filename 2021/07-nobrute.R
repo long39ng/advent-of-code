@@ -23,7 +23,7 @@ min_fuels <- function(x, constant_burn = TRUE) {
 
 # Data --------------------------------------------------------------------
 
-crabs <- readLines(here::here("2021/Day7/data.txt")) |>
+crabs <- readLines(here::here("2021/07-input")) |>
   strsplit(",", fixed = TRUE) |>
   unlist() |>
   as.numeric()

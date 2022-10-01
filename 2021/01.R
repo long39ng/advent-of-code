@@ -3,7 +3,7 @@ library(dplyr)
 
 # Data --------------------------------------------------------------------
 
-input_df <- readLines(here::here("2021/Day1/data.txt")) |>
+input_df <- readLines(here::here("2021/01-input")) |>
   as.integer() |>
   as_tibble()
 

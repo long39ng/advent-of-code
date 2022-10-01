@@ -39,7 +39,7 @@ decimal_from_last_row <- function(list) {
 
 # Data --------------------------------------------------------------------
 
-input_df <- readLines(here::here("2021/Day3/data.txt")) |>
+input_df <- readLines(here::here("2021/03-input")) |>
   strsplit("", fixed = TRUE) |>
   map(\(x) set_names(as.numeric(x), paste0("bit", seq_along(x)))) |>
   bind_rows()

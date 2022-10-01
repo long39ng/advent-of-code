@@ -23,7 +23,7 @@ min_total_risk <- function(m) {
 
 # Data --------------------------------------------------------------------
 
-input <- readLines(here::here("2021/Day15/data.txt")) |>
+input <- readLines(here::here("2021/15-input")) |>
   strsplit("", fixed = TRUE) |>
   map(as.integer) |>
   do.call(what = rbind)
