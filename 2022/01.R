@@ -1,19 +1,17 @@
-library(tidyverse)
-
-input <- tibble(cal = as.integer(readLines(here::here("2022/01-input")))) |>
-  mutate(reeindeer = data.table::rleid(is.na(cal))) |>
-  drop_na(cal)
+input <- dplyr::tibble(cal = as.integer(readLines(here::here("2022/01-input")))) |>
+  dplyr::mutate(reeindeer = cumsum(is.na(cal))) |>
+  tidyr::drop_na(cal)
 
 cal_counts <- input |>
-  count(reeindeer, wt = cal)
+  dplyr::count(reeindeer, wt = cal, sort = TRUE)
 
 # Part 1 ------------------------------------------------------------------
 
 cal_counts |>
-  slice_max(n, n = 1)
+  dplyr::slice(1)
 
 # Part 2 ------------------------------------------------------------------
 
 cal_counts |>
-  slice_max(n, n = 3) |>
-  summarise(sum(n))
+  dplyr::slice(1:3) |>
+  dplyr::summarise(sum(n))
