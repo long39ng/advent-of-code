@@ -21,7 +21,6 @@ move_crates <- function(stacks, rearrangement, all_at_once = FALSE) {
 # Data --------------------------------------------------------------------
 
 input <- readLines(here::here("2022/05-input"))
-# input <- readLines(here::here("2022/inputu"))
 
 input_section_lengths <- rle(nzchar(input))$lengths
 
