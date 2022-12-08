@@ -1,9 +1,9 @@
 input <- readLines(here::here("2022/08-input")) |>
   strsplit("", fixed = TRUE) |>
-  lapply(as.integer) |>
+  purrr::map(as.integer) |>
   do.call(what = "rbind")
 
-tree_locs <- tidyr::expand_grid(
+tree_locs <- expand.grid(
   i = seq_len(nrow(input)),
   j = seq_len(ncol(input))
 )
