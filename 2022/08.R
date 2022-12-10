@@ -26,10 +26,10 @@ n_smaller <- function(xs, y) length(purrr::head_while(xs, \(x) x < y))
 
 lines_to_edges <- function(mat, i, j) {
   list(
-    w = rev(input[i, 1:j]),
-    e = input[i, j:dim(input)[2]],
-    n = rev(input[1:i, j]),
-    s = input[i:dim(input)[1], j]
+    w = rev(mat[i, 1:j]),
+    e = mat[i, j:dim(mat)[2]],
+    n = rev(mat[1:i, j]),
+    s = mat[i:dim(mat)[1], j]
   ) |>
     purrr::map(utils::tail, -1)
 }
