@@ -1,5 +1,3 @@
-library(tidyverse)
-
 # Data --------------------------------------------------------------------
 
 parse_monkey <- function(lines) {
