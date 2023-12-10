@@ -2,11 +2,11 @@ use utils::read_lines;
 
 fn main() {
     if let Some(sum1) = sum_calibration_values("./input.txt", parse_line_1) {
-        println!("[PART 1] Sum of calibration values: {}", sum1);
+        println!("[PART 1] {}", sum1);
     }
 
     if let Some(sum2) = sum_calibration_values("./input.txt", parse_line_2) {
-        println!("[PART 2] Sum of calibration values: {}", sum2);
+        println!("[PART 2] {}", sum2);
     }
 }
 

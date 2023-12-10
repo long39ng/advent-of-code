@@ -3,11 +3,11 @@ use utils::read_lines;
 
 fn main() {
     if let Some(sum1) = answer("./input.txt", sum_possible_ids) {
-        println!("[PART 1] Sum of IDs of possible games: {}", sum1)
+        println!("[PART 1] {}", sum1)
     }
 
-    if let Some(sum1) = answer("./input.txt", sum_power) {
-        println!("[PART 2] Sum of IDs of possible games: {}", sum1)
+    if let Some(sum2) = answer("./input.txt", sum_power) {
+        println!("[PART 2] {}", sum2)
     }
 }
 
@@ -77,9 +77,7 @@ fn parse_game(line: &str) -> Game {
     let parts: Vec<&str> = line.split(':').collect();
 
     Game {
-        id: parts[0].split(' ').collect::<Vec<&str>>()[1]
-            .parse()
-            .unwrap(),
+        id: parts[0].split(' ').nth(1).unwrap().parse().unwrap(),
         sets: parts[1]
             .trim()
             .split(';')

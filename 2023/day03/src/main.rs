@@ -8,9 +8,9 @@ fn main() {
         .filter_map(Result::ok)
         .collect();
 
-    println!("[PART 1] Sum of part numbers: {}", sum_part_numbers(&lines));
+    println!("[PART 1] {}", sum_part_numbers(&lines));
 
-    println!("[PART 2] Sum of part numbers: {}", sum_gear_ratios(&lines));
+    println!("[PART 2] {}", sum_gear_ratios(&lines));
 }
 
 #[derive(PartialEq, Eq, Hash)]
