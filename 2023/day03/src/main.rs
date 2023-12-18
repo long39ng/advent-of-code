@@ -122,7 +122,7 @@ fn parse_symbols(lines: &Vec<String>) -> Vec<Vec<char>> {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::*;
 
     fn read_example() -> Vec<String> {

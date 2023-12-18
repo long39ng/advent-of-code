@@ -110,7 +110,7 @@ const BAG: CubeSet = CubeSet {
 };
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::*;
 
     #[test]

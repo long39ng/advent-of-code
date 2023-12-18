@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::ops::RangeInclusive;
 use utils::read_lines;
 
 fn main() {
@@ -37,8 +38,8 @@ fn sum_card_copies(cards: &Vec<Card>) -> u32 {
         if let Some(copy_ids) = which_card_copies(card) {
             let this_count_clone = this_count.clone();
 
-            copy_ids.iter().for_each(|id| {
-                let copy_count = counts.entry(*id).or_insert(0);
+            copy_ids.for_each(|id| {
+                let copy_count = counts.entry(id).or_insert(0);
                 *copy_count += this_count_clone;
             })
         }
@@ -47,9 +48,9 @@ fn sum_card_copies(cards: &Vec<Card>) -> u32 {
     counts.values().sum()
 }
 
-fn which_card_copies(card: &Card) -> Option<Vec<usize>> {
+fn which_card_copies(card: &Card) -> Option<RangeInclusive<usize>> {
     count_matching_numbers(&card.numbers_you_have, &card.winning_numbers)
-        .map(|n_copies| (card.id + 1..=card.id + n_copies).collect())
+        .map(|n_copies| (card.id + 1..=card.id + n_copies))
 }
 
 fn count_matching_numbers(

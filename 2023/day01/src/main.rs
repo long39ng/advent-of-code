@@ -66,7 +66,7 @@ fn parse_digit_word(s: &str) -> Option<u32> {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::*;
 
     #[test]
