@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use utils::read_lines;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -22,20 +23,13 @@ fn n_safe_dampened(reports: &[Vec<u32>]) -> usize {
 }
 
 fn is_safe(report: &[u32]) -> bool {
-    let mut pair_iter = report.windows(2);
-    if let Some(first_pair) = pair_iter.next() {
-        let (first, second) = (first_pair[0], first_pair[1]);
-        if first == second || first.abs_diff(second) > 3 {
-            return false;
-        }
-        let direction = first.cmp(&second);
+    let diff_set: HashSet<i32> = report
+        .windows(2)
+        .map(|pair| pair[0] as i32 - pair[1] as i32)
+        .collect();
 
-        return pair_iter.all(|pair| {
-            let (a, b) = (pair[0], pair[1]);
-            a.cmp(&b) == direction && a.abs_diff(b) <= 3
-        });
-    }
-    true
+    diff_set.is_subset(&HashSet::from([1, 2, 3]))
+        || diff_set.is_subset(&HashSet::from([-1, -2, -3]))
 }
 
 fn is_safe_dampened(report: &[u32]) -> bool {
