@@ -1,0 +1,9 @@
+[package]
+name = "day04"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.94"
+ndarray = "0.16.1"
+utils = { path = "../utils" }
