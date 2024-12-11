@@ -1,6 +1,24 @@
 use std::collections::HashMap;
 use utils::read_lines;
 
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let (ordering_rules, updates) = read_instructions("input.txt")?;
+
+    let (valid_updates, mut invalid_updates): (Vec<_>, Vec<_>) = updates
+        .into_iter()
+        .partition(|update| update.is_valid(&ordering_rules));
+
+    println!("[PART 1] {}", sum_middle_page_numbers(&valid_updates));
+
+    invalid_updates
+        .iter_mut()
+        .for_each(|update| update.reorder(&ordering_rules));
+
+    println!("[PART 2] {}", sum_middle_page_numbers(&invalid_updates));
+
+    Ok(())
+}
+
 type PageOrderingRule = (u32, u32);
 
 struct Update {
@@ -8,22 +26,39 @@ struct Update {
     page_index: HashMap<u32, usize>,
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let (ordering_rules, updates) = read_instructions("input.txt")?;
+impl Update {
+    fn is_valid(&self, constraints: &[PageOrderingRule]) -> bool {
+        constraints.iter().all(|(a, b)| {
+            if let (Some(a_idx), Some(b_idx)) = (self.page_index.get(a), self.page_index.get(b)) {
+                a_idx < b_idx
+            } else {
+                true
+            }
+        })
+    }
 
-    let (valid_updates, mut invalid_updates): (Vec<_>, Vec<_>) = updates
-        .into_iter()
-        .partition(|update| update_is_valid(update, &ordering_rules));
+    fn reorder(&mut self, constraints: &[PageOrderingRule]) {
+        let mut is_valid = false;
 
-    println!("[PART 1] {}", sum_middle_page_numbers(&valid_updates));
+        while !is_valid {
+            is_valid = true;
 
-    invalid_updates
-        .iter_mut()
-        .for_each(|update| reorder_update(update, &ordering_rules));
+            for &(a, b) in constraints {
+                if let (Some(&a_idx), Some(&b_idx)) =
+                    (self.page_index.get(&a), self.page_index.get(&b))
+                {
+                    if a_idx > b_idx {
+                        is_valid = false;
 
-    println!("[PART 2] {}", sum_middle_page_numbers(&invalid_updates));
+                        self.pages.swap(a_idx, b_idx);
 
-    Ok(())
+                        self.page_index.insert(a, b_idx);
+                        self.page_index.insert(b, a_idx);
+                    }
+                }
+            }
+        }
+    }
 }
 
 fn sum_middle_page_numbers(updates: &[Update]) -> u32 {
@@ -31,39 +66,6 @@ fn sum_middle_page_numbers(updates: &[Update]) -> u32 {
         .iter()
         .map(|update| update.pages[update.pages.len() / 2])
         .sum()
-}
-
-fn update_is_valid(update: &Update, constraints: &[PageOrderingRule]) -> bool {
-    constraints.iter().all(|(a, b)| {
-        if let (Some(a_idx), Some(b_idx)) = (update.page_index.get(a), update.page_index.get(b)) {
-            a_idx < b_idx
-        } else {
-            true
-        }
-    })
-}
-
-fn reorder_update(update: &mut Update, constraints: &[PageOrderingRule]) {
-    let mut is_valid = false;
-
-    while !is_valid {
-        is_valid = true;
-
-        for &(a, b) in constraints {
-            if let (Some(&a_idx), Some(&b_idx)) =
-                (update.page_index.get(&a), update.page_index.get(&b))
-            {
-                if a_idx > b_idx {
-                    is_valid = false;
-
-                    update.pages.swap(a_idx, b_idx);
-
-                    update.page_index.insert(a, b_idx);
-                    update.page_index.insert(b, a_idx);
-                }
-            }
-        }
-    }
 }
 
 fn read_instructions(input_path: &str) -> std::io::Result<(Vec<PageOrderingRule>, Vec<Update>)> {
@@ -103,13 +105,13 @@ mod tests {
 
         let (valid_updates, mut invalid_updates): (Vec<_>, Vec<_>) = updates
             .into_iter()
-            .partition(|update| update_is_valid(update, &ordering_rules));
+            .partition(|update| update.is_valid(&ordering_rules));
 
         assert_eq!(sum_middle_page_numbers(&valid_updates), 143);
 
         invalid_updates
             .iter_mut()
-            .for_each(|update| reorder_update(update, &ordering_rules));
+            .for_each(|update| update.reorder(&ordering_rules));
 
         assert_eq!(sum_middle_page_numbers(&invalid_updates), 123);
         Ok(())
