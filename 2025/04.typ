@@ -8,7 +8,15 @@ How many rolls of paper can be accessed by a forklift?
 
 #let (nrow, ncol) = (diagram.len(), diagram.at(0).len())
 
-#let queen-nbs(mat, i, j) = {
+#let roll-locations = (
+  diagram
+    .enumerate()
+    .map(((i, row)) => row.enumerate().filter(((_, x)) => x == "@").map(((j, _)) => nrow * i + j))
+    .flatten()
+)
+
+#let nb-locations(loc) = {
+  let (i, j) = (calc.quo(loc, nrow), calc.rem(loc, ncol))
   let nbs = ()
 
   for di in (-1, 0, 1) {
@@ -19,24 +27,20 @@ How many rolls of paper can be accessed by a forklift?
 
       if nb-i < 0 or nb-i >= nrow or nb-j < 0 or nb-j >= ncol { continue }
 
-      nbs.push(mat.at(nb-i).at(nb-j))
+      nbs.push(nrow * nb-i + nb-j)
     }
   }
 
   nbs
 }
 
-#let is-accessible-roll(mat, i, j) = {
-  mat.at(i).at(j) == "@" and queen-nbs(mat, i, j).filter(x => x == "@").len() < 4
+#let is-accessible(loc, roll-locs) = {
+  nb-locations(loc).filter(nb => nb in roll-locs).len() < 4
 }
 
 Answer:
 #{
-  range(nrow * ncol)
-    .filter(idx => {
-      is-accessible-roll(diagram, calc.quo(idx, nrow), calc.rem(idx, ncol))
-    })
-    .len()
+  roll-locations.filter(loc => is-accessible(loc, roll-locations)).len()
 }
 
 == Part Two
@@ -49,22 +53,18 @@ How many rolls of paper in total can be removed by the Elves and their forklifts
 
 Answer:
 #{
-  let total-rolls = 0
+  let sum-rolls = 0
 
   while true {
-    let accessible-rolls = range(nrow * ncol)
-      .map(idx => (calc.quo(idx, nrow), calc.rem(idx, ncol)))
-      .filter(((i, j)) => is-accessible-roll(diagram, i, j))
+    let accessible-rolls = roll-locations.filter(loc => is-accessible(loc, roll-locations))
 
     if accessible-rolls.len() == 0 {
       break
     }
 
-    for (i, j) in accessible-rolls {
-      diagram.at(i).at(j) = "."
-    }
-    total-rolls += accessible-rolls.len()
+    sum-rolls += accessible-rolls.len()
+    roll-locations = roll-locations.filter(loc => loc not in accessible-rolls)
   }
 
-  total-rolls
+  sum-rolls
 }
